@@ -2,7 +2,7 @@
 
 ## Note:
 
-    This Works with the output of <a href="https://github.com/0xGodson/getStatus/">this</a> tool
+This Works with the output of <a href="https://github.com/0xGodson/getStatus/">this</a> tool
 
 ## Usage: 
     ./filterStatus <Project_Name> <URL_List>
