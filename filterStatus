@@ -1,0 +1,130 @@
+#!/usr/bin/python3
+import os
+from sys import argv
+import re 
+
+
+status_200 = []
+status_30x = []
+status_401 = []
+status_403 = []
+status_404 = []
+status_500 = []
+
+
+try:
+
+    dirName = argv[1]
+    fileName = argv[2]
+
+    def create_files(dirName):
+        os.system(f'mkdir {dirName}')
+        global names
+        names = ["200.txt", "30x.txt", "401.txt", "403.txt", "404.txt", "50x.txt"]
+
+    create_files(dirName)        
+
+    def filter_status(fileName):
+        os.system(f'cat {fileName} | grep 200 > 200a.txt')
+        os.system(f'cat {fileName} | grep 301 > 301.txt')
+        os.system(f'cat {fileName} | grep 302 > 302.txt')
+        os.system(f'cat {fileName} | grep 303 > 303.txt')
+        os.system(f'cat {fileName} | grep 307 > 307.txt')
+        os.system(f'cat {fileName} | grep 401 > 401a.txt')
+        os.system(f'cat {fileName} | grep 403 > 403a.txt')
+        os.system(f'cat {fileName} | grep 404 > 404a.txt')
+        
+    filter_status(fileName)
+
+
+    with open("200a.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("200", "")
+            url = url.split(' ', 1)
+            status_200.append(url[0])
+
+    with open("301.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("301", "")
+            url = url.split(' ', 1)
+            status_30x.append(url[0])
+
+    with open("302.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("302", "")
+            url = url.split(' ', 1)
+            status_30x.append(url[0])
+
+    with open("303.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("303", "")
+            url = url.split(' ', 1)
+            status_30x.append(url[0])        
+
+    with open("307.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("307", "")
+            url = url.split(' ', 1)
+            status_30x.append(url[0])
+
+
+    with open("401a.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("401", "")
+            url = url.split(' ', 1)
+            status_401.append(url[0])
+
+    with open("403a.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("403", "")
+            url = url.split(' ', 1)
+            status_403.append(url[0])
+
+    with open("404a.txt",'r') as f:
+        for url in f:
+            url = url.strip()
+            url = url.replace("404", "")
+            url = url.split(' ', 1)
+            status_404.append(url[0])
+
+
+
+    for url in status_200:
+        os.system(f"echo {url} >> 200.txt")
+            
+
+
+    for url in status_30x:
+        os.system(f"echo {url} >> 30x.txt")    
+
+
+
+    for url in status_401:
+        os.system(f"echo {url} >> 401.txt")    
+
+
+
+
+    for url in status_403:
+        os.system(f"echo {url} >> 403.txt")                            
+
+
+
+    for url in status_404:
+        os.system(f"echo {url} >> 404.txt")    
+
+    
+
+    os.system('rm -rf 200a.txt 301.txt 302.txt 303.txt 307.txt 401a.txt 403a.txt 404a.txt 500a.txt')
+
+    os.system(f'mv 200.txt 30x.txt 401.txt 403.txt 404.txt {dirName}/')
+    os.system(f'cat {dirName}/* > {dirName}/urls.txt')
+except IndexError:
+    print(f'Usage {argv[0]} <Project_Name> <URL_List>')    
